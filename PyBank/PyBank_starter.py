@@ -13,7 +13,7 @@ file_to_output = os.path.join("analysis", "budget_analysis.txt")  # Output file 
 total_months = [0]
 total_net = [1]
 # Add more variables to track other necessary financial data
-profits_losses = []
+profits_losses = [1]
 change  = []
 average_change = []
 Greatest_Inc_Profits = []
@@ -35,33 +35,49 @@ with open('budget_data.csv', mode='r') as csvfile:
         total_net += float(row[1])
 print("Total net: $", total_net)
 
-    # Extract first row to avoid appending to net_change_list
-average_change = int(row[1])
-#with open('budget_data.csv', 'r') as csvfile:
-with open(file_to_load) as financial_data:
-    reader = csv.reader(financial_data, delimiter=",")
-    with open('budget_data.csv', 'r') as csvfile:
-        header = next(financial_data)
-        for row in financial_data:
-                financial_data['Change'] = financial_data['Profit/Losses'].diff()
-                average_change = financial_data['Change'].mean()
+total_net = 0
+profits_losses = []  # List to store changes
+previous_value = None  # To track the previous month's value
+# Open and read the CSV file
+with open('budget_data.csv', mode='r') as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
+    header = next(csvreader)  # Skip header row
+    # Loop through the rows
+    for row in csvreader:
+        current_value = int(row[1])  # Get current month's profit/loss
+        if previous_value is not None:
+            # Calculate the change from the previous month
+            change = current_value - previous_value
+            profits_losses.append(change)  # Append to the list of changes
+        previous_value = current_value  # Update previous value for the next iteration
+        # Add the profit/loss to total_net
+        total_net += current_value
+# Ensure that profits_losses contains values before computing the average
+if len(profits_losses) > 0:
+    average_change = sum(profits_losses) / len(profits_losses)
+else:
+    average_change = 0  # If no changes, default to 0
+
+with open('budget_data.csv', mode='r') as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=',')
+    header = next(csvreader)  # Skip header row
+    # Loop through the rows
+    for row in csvreader:
+        current_value = int(row[1])
+        greatest_increase_month = (row[0])
+        change = current_value > previous_value
+        profits_losses.append(change)
+    previous_value > current_value
+    total_net >= current_value
+if len(profits_losses) >0:
+    Greatest_Inc_Profits = sum(profits_losses) / len(profits_losses)
+else:
+    Greatest_Inc_Profits = 0
+
+# Print the average change
 print(f"Average Change: ${average_change:.2f}")
-         
 
-    # Track the total and net change
-    
-
-    # Process each row of data
- 
-
-        # Track the total
-
-
-        # Track the net change
-
-
-        # Calculate the greatest increase in profits (month and amount)
-#Greatest_Inc_Profits = ["", 0]
+print(f"Greatest Increase in Profits: {greatest_increase_month} (${Greatest_Inc_Profits})")
 
         # Calculate the greatest decrease in losses (month and amount)
 #Greatest_Dec_Profits = ["", 0]
