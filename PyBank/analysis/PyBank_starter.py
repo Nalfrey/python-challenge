@@ -25,9 +25,6 @@ with open(file_to_load) as financial_data:
 with open('budget_data.csv', 'r') as csvfile:
     csvreader = csv.reader(csvfile)
     row_count = sum(1 for row in csvreader)  # Count each row
-
-print("Financial Analysis")
-print("------------------------------")
 print(f'Total Months: {row_count - 1}') #count rows and remove header row
 
 total_net = 0
@@ -35,7 +32,7 @@ with open('budget_data.csv', mode='r') as csvfile:
     csvreader = csv.reader(csvfile)
     header =next(csvreader)
     for row in csvreader:
-        total_net += float(row[1]) #calculate total net
+        total_net += float(row[1])
 print("Total net: $", total_net)
 
 total_net = 0
