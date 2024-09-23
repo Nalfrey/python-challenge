@@ -1,0 +1,1 @@
+Financial Analysis ------------------Total Months: {total_months}Total : {total_net}Average Change: {average_change}Greatest Increase In Profits: {greatest_increase_month} {greatest_increase}Greates Decrease in Profits : {greatest_decrease_month} {greatest_decrease}
